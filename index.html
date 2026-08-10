@@ -116,14 +116,15 @@ map.on('load', () => {
         'source': 'places',
         'layout': {},
         'paint': {
-            'fill-color': [
+            'fill-color': '#086053',
+            'fill-opacity':       
+            [
                     'case',
                     ['boolean', ['feature-state', 'hover'], false],
-                    '#086053',
-                    '#F4B657'
-                ]
-            'fill-opacity': 0.7
-        }
+                    1,
+                    0.4
+                ],
+        },
     });
 
     map.addLayer({
@@ -164,20 +165,20 @@ map.on('load', () => {
             popup.remove();
         });
 
-        
+
         // When the user moves their mouse over the state-fill layer, we'll update the
         // feature state for the feature under the mouse.
-        map.on('mousemove', 'state-fills', (e) => {
+        map.on('mousemove', 'places-fill', (e) => {
             if (e.features.length > 0) {
                 if (hoveredPolygonId !== null) {
                     map.setFeatureState(
-                        { source: 'states', id: hoveredPolygonId },
+                        { source: 'places', id: hoveredPolygonId },
                         { hover: false }
                     );
                 }
                 hoveredPolygonId = e.features[0].id;
                 map.setFeatureState(
-                    { source: 'states', id: hoveredPolygonId },
+                    { source: 'places', id: hoveredPolygonId },
                     { hover: true }
                 );
             }
@@ -185,16 +186,16 @@ map.on('load', () => {
 
         // When the mouse leaves the state-fill layer, update the feature state of the
         // previously hovered feature.
-        map.on('mouseleave', 'state-fills', () => {
+        map.on('mouseleave', 'places-fill', () => {
             if (hoveredPolygonId !== null) {
                 map.setFeatureState(
-                    { source: 'states', id: hoveredPolygonId },
+                    { source: 'places', id: hoveredPolygonId },
                     { hover: false }
                 );
             }
             hoveredPolygonId = null;
         });
-    });
+
 
   });
 
