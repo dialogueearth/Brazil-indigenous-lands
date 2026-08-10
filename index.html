@@ -72,6 +72,8 @@
       style: 'mapbox://styles/nanaui/cmr2dm8ko000801qq8737898h',
   });
 
+  let hoveredPolygonId = null;
+
   // Create the popup UI, but don't add it to the map yet.
         // You only want the UI to appear once the cursor is hovering over an element.
         const popup = new mapboxgl.Popup({
@@ -114,7 +116,12 @@ map.on('load', () => {
         'source': 'places',
         'layout': {},
         'paint': {
-            'fill-color': '#086053',
+            'fill-color': [
+                    'case',
+                    ['boolean', ['feature-state', 'hover'], false],
+                    '#086053',
+                    '#F4B657'
+                ]
             'fill-opacity': 0.7
         }
     });
@@ -157,6 +164,37 @@ map.on('load', () => {
             popup.remove();
         });
 
+        
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on('mousemove', 'state-fills', (e) => {
+            if (e.features.length > 0) {
+                if (hoveredPolygonId !== null) {
+                    map.setFeatureState(
+                        { source: 'states', id: hoveredPolygonId },
+                        { hover: false }
+                    );
+                }
+                hoveredPolygonId = e.features[0].id;
+                map.setFeatureState(
+                    { source: 'states', id: hoveredPolygonId },
+                    { hover: true }
+                );
+            }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on('mouseleave', 'state-fills', () => {
+            if (hoveredPolygonId !== null) {
+                map.setFeatureState(
+                    { source: 'states', id: hoveredPolygonId },
+                    { hover: false }
+                );
+            }
+            hoveredPolygonId = null;
+        });
+    });
 
   });
 
