@@ -28,7 +28,7 @@
         padding: 8px;
         background-color: #FFFFFF;
         border-radius: 0px;
-        z-index: 15;
+        z-index: 10;
         left: 1em;
         bottom: 1em;
         box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08), 0 1px 3px 1px rgba(66, 66, 66, 0.16);
@@ -53,7 +53,9 @@
       #infos{
         color: #00181E;
         font-size: 14px;
+        margin-bottom: 0;
       }
+
 
     </style>
    </head> 
@@ -65,7 +67,7 @@
   const map = new mapboxgl.Map({
       accessToken: 'pk.eyJ1IjoibmFuYXVpIiwiYSI6ImNtcjI1dzZ3NDAyOHozMG13aDY0MzB0N3MifQ.Lxxynm6A8qwOtoTKgjVvrw',
       container: 'map', // container ID
-      center: [-59.200381, -6.793216], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+      center: [-59.200381, -5.093216], // starting position [lng, lat]. Note that lat must be set between -90 and 90
       zoom: 4, // starting zoom
       //style: 'mapbox://styles/mapbox/standard',
       style: 'mapbox://styles/nanaui/cmr2dm8ko000801qq8737898h',
@@ -153,7 +155,8 @@ map.on('load', () => {
                     .setLngLat(e.lngLat)
                     .setHTML(
                         `<div id="TI-name"><strong>${e.feature.properties.terrai_nom}</strong></div>
-                        <p id="infos">${e.feature.properties.description}</p>`
+                        <p id="infos">${e.feature.properties.description}</p>
+                        `
                     )
                     .addTo(map);
             }
