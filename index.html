@@ -37,9 +37,6 @@
     }
         #title-box{
         position: absolute;
-        width: 810px;
-        margin: 20px;
-        padding: 2px;
         background-color: #FFFFFF;
         border-radius: 0px;
         z-index: 10;
@@ -48,9 +45,37 @@
         box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08), 0 1px 3px 1px rgba(66, 66, 66, 0.16);
         }
 
+        /* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+        @media screen and (min-width: 851px) {
+            #title-box h1 {
+                font-size: 20px;
+            }
+
+            #title-box {
+                width: 810px;
+                margin: 20px;
+                padding: 2px;
+            }
+                
+        }
+
+        /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+         @media screen and (max-width: 850px) {
+            #title-box h1 {
+                font-size: 14px;
+            }
+
+             #title-box {
+                width: 575px;
+                margin: 10px;
+                padding: 1px;
+            }
+        }
+
         h1 {
             line-height: 40px !important;
-            font: 20px "Bitter", serif;
+            /* font: 20px "Bitter", serif; */
+            font-family: "Bitter", serif;
             color: #00181E;
             letter-spacing: 0.04em;
             padding: 0 0 0 10px;
@@ -82,6 +107,7 @@
         [-102.311173, -34.636126], // Southwest coordinates
         [-24.895485, 20.012052] // Northeast coordinates
     ];
+
 
   // creates the map, passing your access token to associate it with your Mapbox account, and setting the container, initial center, and zoom level
   const map = new mapboxgl.Map({
